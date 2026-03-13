@@ -1,0 +1,66 @@
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
+import java.util.*;
+class Main {
+    public static void main(String[] args) {
+       Scanner read=new Scanner(System.in);
+       int n=read.nextInt();
+       int m=read.nextInt();
+       char[][] arr=new char[n][m];
+       int ali=0;
+       int total=0;
+       boolean avail=false;
+       Queue<int[]>bfs=new LinkedList<>();
+       for(int i=0;i<n;i++){
+           for(int j=0;j<m;j++){
+               arr[i][j]=read.next().charAt(0);
+               if(arr[i][j]=='E')
+                    total++;
+               if(arr[i][j]=='A'){
+                   bfs.add(new int[]{i,j}); 
+                   ali++;
+                   avail=true;
+               }
+           }
+       }
+       int count=0;
+       int[][] dir={{-1,0},{0,-1},{1,0},{0,1}};
+      
+      Queue<int[]>subqueue=new LinkedList<>();
+       while(avail){
+           while(!bfs.isEmpty()){
+               int[] current=bfs.poll();
+               int ci=current[0];
+               int cj=current[1];
+               for(int i=0;i<4;i++){
+                   int ni=ci+dir[i][0];
+                   int nj=cj+dir[i][1];
+                   if(ni>=0 && ni<n && nj>=0 && nj<m &&  arr[ni][nj]!='*' &&  arr[ni][nj]!='A' &&  arr[ni][nj] == 'E'){
+                       arr[ni][nj]='A';
+                       ali++;
+                       subqueue.add(new int[]{ni,nj});
+                   }
+               }
+           }
+           
+           if(!subqueue.isEmpty()){
+               count++;
+               while(!subqueue.isEmpty()){
+                   bfs.add(subqueue.poll());
+               }
+           }
+           else{
+               avail=false;
+           }
+       }
+       for(int i=0;i<n;i++){
+           for(int j=0;j<m;j++){
+              System.out.print(arr[i][j]+" ");
+           }
+           System.out.println();
+       }
+       
+         
+       
+    }
+}
