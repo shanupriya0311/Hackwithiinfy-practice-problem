@@ -1,0 +1,64 @@
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
+import java.io.*;
+import java.util.*;
+class Main {
+    public static void main(String[] args) throws Exception {
+       BufferedReader bf=new BufferedReader(new InputStreamReader(System.in));
+       int n=Integer.parseInt(bf.readLine());
+       int[] arr=new int[n];
+       for(int i=0;i<n;i++){
+           arr[i]=Integer.parseInt(bf.readLine());
+       }
+       int sum=0;
+        TreeSet<Integer>set=new TreeSet<>();
+       for(int i=0;i<n;i++){
+            if(!set.contains(arr[i])){
+                set.add(arr[i]);
+            }
+            else{
+                int m=set.size();
+                int last=set.last();
+                if(m-1==last){
+                    sum+=m;
+                    set.clear();
+                  
+                }
+                else{
+                    int val=0;
+                    for(int num:set){
+                       if(num!=val){
+                           sum+=val;
+                           set.clear();
+                           break;
+                       }
+                       val++;
+                    }
+                    
+                }
+                 set.add(arr[i]);
+            }
+       }
+       if(!set.isEmpty()){
+          int m=set.size();
+                int last=set.last();
+                if(m-1==last){
+                    sum+=m;
+                    set.clear();
+                }
+                else{
+                    int val=0;
+                    for(int num:set){
+                       if(num!=val){
+                           sum+=val;
+                           set.clear();
+                           break;
+                       }
+                       val++;
+                    }
+
+                }
+       }
+       System.out.println(sum);
+    }
+}
