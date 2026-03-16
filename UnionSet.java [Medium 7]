@@ -1,0 +1,67 @@
+package problems;
+import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+class Main {
+	static int[] parent;
+	public static void union(int x,int y) {
+		int rootx=find(x);
+		int rooty=find(y);
+		if(rootx!=rooty) {
+			parent[rooty]=rootx;
+		}
+	}
+	public static int find(int x) {
+		if(parent[x]==x) {
+			return x;
+		}
+		return find(parent[x]);
+	}
+    public static void main(String[] args) throws Exception {
+       BufferedReader bf=new BufferedReader(new InputStreamReader(System.in));
+       int n=Integer.parseInt(bf.readLine());
+       int[][] arr=new int[n][3];
+       int maxnum=Integer.MIN_VALUE;
+       for(int i=0;i<n;i++) {
+    	   for(int j=0;j<3;j++) {
+    		   arr[i][j]=Integer.parseInt(bf.readLine());
+    		   maxnum=Math.max(maxnum, arr[i][j]);
+    	   }
+       }
+       int sum=0;
+        parent=new int[maxnum+1];
+       for(int i=0;i<=maxnum;i++) {
+    	   parent[i]=i;
+       }
+       for(int i=0;i<n;i++) {
+    	   int a=arr[i][0];
+    	   int b=arr[i][1];
+    	   if(a==1) {
+    		   int c=arr[i][2];
+    		   union(b,c);
+    	   }
+    	   else {
+    		   int root=find(b);
+    		   List<Integer>list=new ArrayList<>();
+    		   for(int k=0;k<=maxnum;k++) {
+    			   if(parent[k]==root) {
+    				   list.add(k);
+    			   }
+    		   }
+    		   int count=1;
+    		   int prev=list.get(0);
+    		   for(int l=1;l<list.size();l++) {
+    			   if(prev+1!=list.get(l)) {
+    				   count++;
+    			   }
+    			   prev=list.get(l);
+    		   }
+    		   sum+=count;
+    		   
+    	   }
+    	   
+       }
+       System.out.print(sum);
+       
+    }
+}
