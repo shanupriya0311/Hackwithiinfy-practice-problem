@@ -1,0 +1,53 @@
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
+import java.util.*;
+class Main {
+    public static void main(String[] args) {
+       Scanner read=new Scanner(System.in);
+       int n=read.nextInt();
+       int x=read.nextInt();
+       int y=read.nextInt();
+       int[] arr=new int[n+1];
+       for(int i=1;i<=n;i++){
+           arr[i]=read.nextInt();
+       }
+       Queue<Integer>q=new LinkedList<>();
+       boolean[] visit=new boolean[n+1];
+       q.add(x);
+       visit[x]=true;
+       int step=0;
+       boolean found=false;
+       while(!q.isEmpty()){
+           int size = q.size();   
+    for (int s = 0; s < size; s++) {
+          int i=q.poll();
+          int j= (i+arr[i]-1)%n+1;
+          if(j==y){
+              found=true;
+              break;
+          }
+          if(!visit[j]){
+              visit[j]=true;
+              q.add(j);
+          }
+          int k=(i-arr[i]-1+n)%n+1;
+           if(k==y){
+            found=true;
+              break;
+          }
+          if(!visit[k]){
+              visit[k]=true;
+              q.add(k);
+          }}
+          step++;
+         
+       }
+       if(found){
+           System.out.print(step);
+       }
+       else{
+           System.out.print(-1);
+       }
+       
+    }
+}
